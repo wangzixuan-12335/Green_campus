@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>绿动校园 · 绿色积分平台</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ═══ 登录/注册页 ═══ -->
+<div id="auth-page" class="auth-page">
+  <div class="auth-card">
+    <div class="auth-logo">🌱</div>
+    <h1 class="auth-title">绿动校园</h1>
+    <p class="auth-sub">内在驱动型高校低碳生活激励平台</p>
+
+    <div class="auth-tabs">
+      <button class="auth-tab active" data-tab="login">登录</button>
+      <button class="auth-tab" data-tab="register">注册</button>
+    </div>
+
+    <!-- 登录表单 -->
+    <form id="login-form" class="auth-form active">
+      <div class="form-group">
+        <label>用户名 / 学号</label>
+        <input type="text" id="login-username" placeholder="请输入用户名" required>
+      </div>
+      <div class="form-group">
+        <label>密码</label>
+        <input type="password" id="login-password" placeholder="请输入密码" required>
+      </div>
+      <button type="submit" class="btn-primary">登 录</button>
+    </form>
+
+    <!-- 注册表单 -->
+    <form id="register-form" class="auth-form">
+      <div class="form-group">
+        <label>用户名</label>
+        <input type="text" id="reg-username" placeholder="请输入用户名" required>
+      </div>
+      <div class="form-group">
+        <label>昵称</label>
+        <input type="text" id="reg-nickname" placeholder="给自己起个昵称">
+      </div>
+      <div class="form-group">
+        <label>学号</label>
+        <input type="text" id="reg-studentid" placeholder="请输入学号">
+      </div>
+      <div class="form-group">
+        <label>学院</label>
+        <input type="text" id="reg-college" placeholder="如：爱恩学院">
+      </div>
+      <div class="form-group">
+        <label>专业</label>
+        <input type="text" id="reg-major" placeholder="如：市场营销">
+      </div>
+      <div class="form-group">
+        <label>密码</label>
+        <input type="password" id="reg-password" placeholder="至少6位" required>
+      </div>
+      <div class="form-group">
+        <label>确认密码</label>
+        <input type="password" id="reg-password2" placeholder="再次输入密码" required>
+      </div>
+      <button type="submit" class="btn-primary">注 册</button>
+    </form>
+
+    <p class="auth-hint">体验账号：demo / demo123456</p>
+  </div>
+</div>
+
+<!-- ═══ 主应用 ═══ -->
+<div id="app" class="app-shell" style="display:none;">
+
+  <!-- 移动端顶部栏 -->
+  <header class="mobile-topbar">
+    <button class="mb-menu-btn" id="mb-menu-btn">☰</button>
+    <span class="mb-title" id="mb-title">绿动校园</span>
+    <div class="mb-pts" id="mb-pts">🌱 0</div>
+  </header>
+
+  <!-- 侧边栏（Web端固定 / 移动端抽屉） -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <span class="logo-icon">🌱</span>
+      <span class="logo-name">绿动校园</span>
+      <span class="logo-sub">GREEN CAMPUS</span>
+    </div>
+    <nav class="sidebar-nav">
+      <button class="nav-item active" data-page="home">
+        <span class="nav-icon">🏠</span><span>首页</span>
+      </button>
+      <button class="nav-item" data-page="challenge">
+        <span class="nav-icon">🎯</span><span>校园挑战</span>
+      </button>
+      <button class="nav-item" data-page="shop">
+        <span class="nav-icon">🛒</span><span>积分商城</span>
+      </button>
+      <button class="nav-item" data-page="rank">
+        <span class="nav-icon">🏆</span><span>排行榜</span>
+      </button>
+      <button class="nav-item" data-page="monopoly">
+        <span class="nav-icon">🎲</span><span>绿色大富翁</span>
+      </button>
+      <button class="nav-item" data-page="profile">
+        <span class="nav-icon">👤</span><span>我的</span>
+      </button>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-mini">
+        <div class="user-avatar-sm" id="side-avatar">🌱</div>
+        <div>
+          <div class="user-name-sm" id="side-name">用户</div>
+          <div class="user-pts-sm" id="side-pts">0 积分</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- 遮罩 -->
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+  <!-- 主内容 -->
+  <main class="main-content">
+    <!-- 顶部栏 -->
+    <div class="topbar">
+      <span class="topbar-title" id="topbar-title">首页</span>
+      <div class="topbar-pts" id="topbar-pts">🌱 <span>0</span></div>
+      <button class="topbar-bell" id="topbar-bell">
+        🔔<span class="bell-dot" id="bell-dot" style="display:none;"></span>
+      </button>
+    </div>
+
+    <!-- 滚动区 -->
+    <div class="app-scroll" id="app-scroll">
+
+      <!-- ═══ 首页 ═══ -->
+      <section class="page active" id="page-home">
+        <div class="hero-card">
+          <div class="hero-greeting" id="hero-greeting">你好</div>
+          <div class="hero-name" id="hero-name">低碳新人</div>
+          <div class="hero-pts-row">
+            <div class="hero-pts-main">
+              <div class="hero-pts-label">绿色积分</div>
+              <div class="hero-pts-num" id="hero-points">0</div>
+              <div class="hero-pts-unit">points</div>
+            </div>
+            <div class="streak-pill">
+              <div class="streak-num" id="hero-streak">0</div>
+              <div class="streak-label">连续打卡</div>
+            </div>
+          </div>
+          <div class="hero-stats-row">
+            <div class="hero-stat">
+              <div class="hstat-val" id="hero-carbon">0</div>
+              <div class="hstat-label">减碳量(kg)</div>
+            </div>
+            <div class="hero-stat">
+              <div class="hstat-val" id="hero-tasks">0</div>
+              <div class="hstat-label">完成任务</div>
+            </div>
+            <div class="hero-stat">
+              <div class="hstat-val" id="hero-level">Lv.1</div>
+              <div class="hstat-label">等级</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-head">
+            <div class="section-title">今日进度</div>
+            <span class="prog-count" id="prog-count">0/0</span>
+          </div>
+          <div class="progress-card">
+            <div class="prog-track">
+              <div class="prog-fill" id="prog-fill" style="width:0%"></div>
+            </div>
+            <div class="prog-note" id="prog-note">今日已获 0 积分，继续加油！</div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-head">
+            <div class="section-title">今日任务</div>
+          </div>
+          <div id="task-list" class="task-list"></div>
+        </div>
+
+        <div class="section">
+          <div class="section-head">
+            <div class="section-title">本周排行</div>
+            <button class="section-more" data-page="rank">查看全部 ›</button>
+          </div>
+          <div class="rank-card" id="rank-mini"></div>
+        </div>
+      </section>
+
+      <!-- ═══ 挑战 ═══ -->
+      <section class="page" id="page-challenge">
+        <div class="page-header"><h2>校园挑战</h2></div>
+        <div class="chip-row" id="challenge-chips">
+          <button class="chip active" data-status="">全部</button>
+          <button class="chip" data-status="ongoing">进行中</button>
+          <button class="chip" data-status="ended">已结束</button>
+          <button class="chip" data-status="upcoming">即将开始</button>
+        </div>
+        <div class="section" id="challenge-list"></div>
+      </section>
+
+      <!-- ═══ 商城 ═══ -->
+      <section class="page" id="page-shop">
+        <div class="shop-hero">
+          <div class="shop-hero-left">
+            <h3>积分商城</h3>
+            <p>用绿色积分兑换环保好物</p>
+          </div>
+          <div class="shop-hero-pts">
+            <div class="pts-num" id="shop-pts">0</div>
+            <div class="pts-sub">可用积分</div>
+          </div>
+        </div>
+        <div class="section">
+          <div class="section-head"><div class="section-title">环保好物</div></div>
+          <div class="item-grid" id="shop-grid"></div>
+        </div>
+        <div class="section">
+          <div class="section-head"><div class="section-title">公益捐赠</div></div>
+          <div class="charity-section">
+            <div class="charity-ttl">用积分做公益</div>
+            <div class="charity-sub">将你的绿色积分捐赠给公益项目，为地球贡献一份力量</div>
+            <div class="charity-opts" id="charity-list"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ 排行榜 ═══ -->
+      <section class="page" id="page-rank">
+        <div class="page-header"><h2>排行榜</h2></div>
+        <div class="chip-row" id="rank-chips">
+          <button class="chip active" data-period="week">本周</button>
+          <button class="chip" data-period="month">本月</button>
+          <button class="chip" data-period="total">总榜</button>
+        </div>
+        <div class="rank-hero" id="rank-podium"></div>
+        <div class="section">
+          <div class="lb-full-card" id="lb-full"></div>
+        </div>
+      </section>
+
+      <!-- ═══ 我的 ═══ -->
+      <section class="page" id="page-profile">
+        <div class="profile-top-card">
+          <div class="profile-row">
+            <div class="profile-ava" id="prof-avatar">🌱</div>
+            <div>
+              <div class="profile-n" id="prof-name">用户</div>
+              <div class="profile-s" id="prof-school">学院 · 专业</div>
+              <span class="level-tag" id="prof-level">Lv.1 低碳新人</span>
+            </div>
+          </div>
+          <div class="profile-stats">
+            <div class="ps-item">
+              <div class="ps-val" id="prof-total-pts">0</div>
+              <div class="ps-label">累计积分</div>
+            </div>
+            <div class="ps-item">
+              <div class="ps-val" id="prof-carbon">0</div>
+              <div class="ps-label">减碳(kg)</div>
+            </div>
+            <div class="ps-item">
+              <div class="ps-val" id="prof-streak">0</div>
+              <div class="ps-label">连续打卡</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-head"><div class="section-title">徽章成就</div></div>
+          <div class="badges-row" id="badges-row"></div>
+        </div>
+
+        <div class="section">
+          <div class="section-head"><div class="section-title">绿色记录</div></div>
+          <div class="profile-section" id="green-records"></div>
+        </div>
+
+        <div class="section">
+          <div class="section-head"><div class="section-title">低碳小组</div></div>
+          <div class="profile-section" id="group-list"></div>
+        </div>
+
+        <div class="section">
+          <div class="section-head"><div class="section-title">设置</div></div>
+          <div class="profile-section">
+            <div class="setting-row" id="setting-profile">
+              <span class="si-icon">✏️</span><span class="si-name">编辑资料</span><span class="si-arrow">›</span>
+            </div>
+            <div class="setting-row" id="setting-notify">
+              <span class="si-icon">🔔</span><span class="si-name">消息通知</span><span class="si-arrow">›</span>
+            </div>
+            <div class="setting-row" id="setting-about">
+              <span class="si-icon">ℹ️</span><span class="si-name">关于我们</span><span class="si-arrow">›</span>
+            </div>
+            <div class="setting-row" id="setting-logout">
+              <span class="si-icon">🚪</span><span class="si-name" style="color:#ef4444">退出登录</span><span class="si-arrow">›</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ 绿色大富翁 ═══ -->
+      <section class="page" id="page-monopoly">
+        <!-- 顶部状态栏 -->
+        <div class="mp-status-bar">
+          <div class="mp-stat">
+            <div class="mp-stat-label">可用积分</div>
+            <div class="mp-stat-val" id="mp-points">0</div>
+          </div>
+          <div class="mp-stat">
+            <div class="mp-stat-label">骰子次数</div>
+            <div class="mp-stat-val" id="mp-dice">🎲 0</div>
+          </div>
+          <div class="mp-stat">
+            <div class="mp-stat-label">当前位置</div>
+            <div class="mp-stat-val" id="mp-pos">—</div>
+          </div>
+          <div class="mp-stat">
+            <div class="mp-stat-label">资产价值</div>
+            <div class="mp-stat-val" id="mp-asset">0</div>
+          </div>
+        </div>
+
+        <!-- 棋盘 -->
+        <div class="mp-board-wrap">
+          <div class="mp-board" id="mp-board"></div>
+          <div class="mp-center" id="mp-center">
+            <div class="mp-center-icon">🎲</div>
+            <div class="mp-center-title">绿色大富翁</div>
+            <div class="mp-center-sub">完成低碳任务获取掷骰机会</div>
+          </div>
+        </div>
+
+        <!-- 操作区 -->
+        <div class="mp-action-area">
+          <button class="mp-btn-roll" id="mp-btn-roll">
+            <span class="mp-dice-emoji">🎲</span>
+            <span>掷骰子</span>
+          </button>
+          <div class="mp-action-btns" id="mp-action-btns"></div>
+        </div>
+
+        <!-- 我的资产 -->
+        <div class="section">
+          <div class="section-head">
+            <div class="section-title">我的资产</div>
+            <span class="prog-count" id="mp-props-count">0/3</span>
+          </div>
+          <div class="mp-props" id="mp-props">
+            <div class="mp-empty">暂未认领任何低碳场景</div>
+          </div>
+        </div>
+
+        <!-- 游戏日志 -->
+        <div class="section">
+          <div class="section-head"><div class="section-title">游戏日志</div></div>
+          <div class="mp-logs" id="mp-logs"></div>
+        </div>
+
+        <!-- 排名速览 -->
+        <div class="section">
+          <div class="section-head"><div class="section-title">资产排行</div></div>
+          <div class="mp-rank" id="mp-rank"></div>
+        </div>
+      </section>
+
+    </div><!-- /app-scroll -->
+  </main><!-- /main-content -->
+
+  <!-- 移动端底部 Tab -->
+  <nav class="tab-bar" id="tab-bar">
+    <button class="tab-item active" data-page="home">
+      <span class="tab-icon">🏠</span><span class="tab-label">首页</span>
+    </button>
+    <button class="tab-item" data-page="challenge">
+      <span class="tab-icon">🎯</span><span class="tab-label">挑战</span>
+    </button>
+    <button class="tab-item" data-page="shop">
+      <span class="tab-icon">🛒</span><span class="tab-label">商城</span>
+    </button>
+    <button class="tab-item" data-page="rank">
+      <span class="tab-icon">🏆</span><span class="tab-label">排名</span>
+    </button>
+    <button class="tab-item" data-page="monopoly">
+      <span class="tab-icon">🎲</span><span class="tab-label">大富翁</span>
+    </button>
+    <button class="tab-item" data-page="profile">
+      <span class="tab-icon">👤</span><span class="tab-label">我的</span>
+    </button>
+  </nav>
+
+</div><!-- /app -->
+
+<!-- 兑换确认弹窗 -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal-sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-body">
+      <div class="sheet-title" id="modal-title">确认兑换</div>
+      <div class="sheet-sub" id="modal-sub">将扣除相应积分</div>
+      <div class="sheet-pts-display">
+        <div class="sheet-pts-num" id="modal-pts">0</div>
+        <div class="sheet-pts-note">消耗积分</div>
+      </div>
+      <div class="sheet-actions">
+        <button class="btn-cancel" id="modal-cancel">取消</button>
+        <button class="btn-confirm" id="modal-confirm">确认</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 大富翁事件弹窗 -->
+<div class="mp-modal-overlay" id="mp-modal-overlay">
+  <div class="mp-modal-sheet">
+    <div class="sheet-handle"></div>
+    <div class="mp-modal-icon" id="mp-modal-icon">🎲</div>
+    <div class="mp-modal-title" id="mp-modal-title">事件</div>
+    <div class="mp-modal-desc" id="mp-modal-desc"></div>
+    <div class="mp-modal-pts" id="mp-modal-pts"></div>
+    <div class="mp-quiz-area" id="mp-quiz-area" style="display:none;">
+      <div class="mp-quiz-q" id="mp-quiz-q"></div>
+      <div class="mp-quiz-opts" id="mp-quiz-opts"></div>
+    </div>
+    <div class="mp-modal-actions" id="mp-modal-actions">
+      <button class="btn-confirm" id="mp-modal-ok">确定</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script src="js/app.js"></script>
+</body>
+</html>

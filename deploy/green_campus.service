@@ -1,0 +1,34 @@
+# ═══════════════════════════════════════════════
+# 绿动校园 · Systemd Service 配置
+# 复制到 /etc/systemd/system/green_campus.service
+# ═══════════════════════════════════════════════
+
+[Unit]
+Description=Green Campus (绿动校园) Gunicorn Service
+After=network.target
+
+[Service]
+Type=notify
+User=www-data
+Group=www-data
+
+# ─── 项目路径（按实际修改）───
+WorkingDirectory=/opt/green-campus/backend
+EnvironmentFile=/opt/green-campus/backend/.env
+
+# ─── Gunicorn 启动命令 ───
+ExecStart=/opt/green-campus/venv/bin/gunicorn \
+    --config gunicorn_conf.py \
+    green_campus.wsgi:application
+
+ExecReload=/bin/kill -s HUP $MAINPID
+KillMode=mixed
+TimeoutStopSec=5
+PrivateTmp=true
+
+# ─── 重启策略 ───
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
